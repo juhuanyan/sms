@@ -5,7 +5,7 @@ return [
     /*
      * Laravel-admin name.
      */
-    'name'  => 'Laravel-admin',
+    'name'  => '上行短信WEB平台',
 
     /*
      * Laravel-admin url prefix.
