@@ -23,6 +23,8 @@ class HomeController extends Controller
 {
     public function index()
     {
+        return redirect('admin/jiekou');
+
         return Admin::content(function (Content $content) {
 
             $content->header('Dashboard');
