@@ -118,6 +118,7 @@ class UserController extends Controller
                 $jiekouArray[$jiekou->id] = $jiekou->name;
             }
             $form->divide();
+            $form->html('<b>用户为管理员是,以下信息不需要填写!!</b>');
             $form->select('name', '接口名称')->options($jiekouArray);
             $form->text('jiangeshijian', '获取间隔时间')->placeholder('分钟');
             $form->text('fangwenip', '接口访问IP')->placeholder('*为空则不限制,建议填写。多IP ","分割');
