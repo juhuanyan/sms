@@ -14,9 +14,10 @@ class GetSmsController extends Controller
     public function index(){
 
         $jiekou = Jiekou::where(['name'=>'sms2'])->first();
-        dd($jiekou->url);
         $response = Curl::to($jiekou->url)
             ->get();
+        dd($response);
+
         while (1){
             $response = Curl::to($jiekou->url)
                 ->get();
