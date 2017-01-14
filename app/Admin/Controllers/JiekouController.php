@@ -103,6 +103,7 @@ class JiekouController extends Controller
             $form->text('url', '接口URL');
             $form->radio('type', '返回数据类型')->values(['xml' => 'XML', 'json'=> 'JSON'])->default('xml');
             $form->radio('datatype', '返回数据格式')->values(['utf8' => 'UTF8', 'gbk'=> 'GBK'])->default('utf8');
+            $form->text('jiangeshijian', '获取间隔时间')->placeholder('分钟');
             $form->divide();
             $form->text('shoujihaobiaoshi', '回复手机号标识');
             $form->text('neirongbiaoshi', '回复内容标识');

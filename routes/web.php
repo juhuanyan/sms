@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return redirect('admin');
 });
+
+Route::get('getSms', 'GetSmsController@index');
+Route::get('customerSms/{username}/', 'GetSmsController@customerSms');

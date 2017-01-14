@@ -14,6 +14,9 @@ use Illuminate\Routing\Controller;
 
 use Encore\Admin\Controllers\ModelForm;
 
+use Encore\Admin\Widgets\Box;
+use Encore\Admin\Widgets\Table;
+
 class UserController extends Controller
 {
     use ModelForm;
@@ -29,6 +32,36 @@ class UserController extends Controller
             $content->header(trans('admin::lang.administrator'));
             $content->description(trans('admin::lang.list'));
             $content->body($this->grid()->render());
+        });
+    }
+
+    /**
+     * Edit interface.
+     *
+     * @param $id
+     * @return Content
+     */
+    public function show($id)
+    {
+        return Admin::content(function (Content $content) {
+
+            $user = Admin::user();
+
+            $content->header($user->username);
+
+
+            $headers = ['用户名', $user->username];
+            $rows = [
+                '名称'   => $user->name,
+                '接口名称'    => 25,
+                '接口访问IP' => $user->fangwenip?$user->fangwenip:'无限制',
+                'Web平台登录IP'  => $user->dengluip?$user->dengluip:'无限制',
+                '查询接口URL'  => $user->jiekouurl,
+            ];
+
+            $table = new Table($headers, $rows);
+
+            $content->row((new Box('会员信息', $table))->solid());
         });
     }
 
@@ -70,6 +103,11 @@ class UserController extends Controller
     protected function grid()
     {
         return Admin::grid(Administrator::class, function (Grid $grid) {
+
+            $user = Admin::user();
+            if (!$user->can('administrator') && $user->can('customer')){
+                $grid->model()->where(['id'=>$user->id]);
+            }
             $grid->id('ID')->sortable();
             $grid->username(trans('admin::lang.username'));
             $grid->name(trans('admin::lang.name'));
@@ -91,7 +129,10 @@ class UserController extends Controller
                 }
             });
 
-            $grid->disableBatchDeletion();
+            if (!$user->can('administrator') && $user->can('customer')){
+                $grid->disableActions();
+                $grid->disableBatchDeletion();
+            }
 
             $grid->disableExport();
         });
@@ -119,8 +160,7 @@ class UserController extends Controller
             }
             $form->divide();
             $form->html('<b>用户为管理员时,以下信息不需要填写!!</b>');
-            $form->select('name', '接口名称')->options($jiekouArray);
-            $form->text('jiangeshijian', '获取间隔时间')->placeholder('分钟');
+            $form->select('jiekouid', '接口名称')->options($jiekouArray);
             $form->text('fangwenip', '接口访问IP')->placeholder('*为空则不限制,建议填写。多IP ","分割');
             $form->text('dengluip', 'Web平台登录IP')->placeholder('*为空则不限制,多IP ","分割');
             $form->text('jiekouurl', '查询接口URL')->rules('required');

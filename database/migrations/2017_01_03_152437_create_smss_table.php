@@ -16,9 +16,9 @@ class CreateSmssTable extends Migration
         Schema::create('smss', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('jiekouid');
-            $table->string('shoujihao');
-            $table->text('duanxinneirong');
-            $table->string('huifushijian');
+            $table->string('caller');
+            $table->text('msg');
+            $table->string('deliverdate');
             $table->timestamps();
         });
     }

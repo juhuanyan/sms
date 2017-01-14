@@ -15,12 +15,10 @@ class Smss extends Model
 
     protected $fillable = [
         'jiekouid',
-        'shoujihao',
-        'duanxinneirong',
-        'huifushijian'
+        'caller',
+        'msg',
+        'deliverdate'
     ];
 
     protected $guarded = [];
-
-        
 }

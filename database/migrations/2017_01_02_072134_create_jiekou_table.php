@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateJiekousTable extends Migration
+class CreateJiekouTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateJiekousTable extends Migration
      */
     public function up()
     {
-        Schema::create('jiekous', function (Blueprint $table) {
+        Schema::create('jiekou', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('url');
@@ -37,6 +37,6 @@ class CreateJiekousTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jiekous');
+        Schema::dropIfExists('jiekou');
     }
 }

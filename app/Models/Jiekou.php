@@ -24,7 +24,8 @@ class Jiekou extends Model
         'shijianbiaoshi',
         'fanhuizhibiaoshi',
         'chenggongdaima',
-        'status'
+        'status',
+        'jiangeshijian'
     ];
 
     protected $guarded = [];

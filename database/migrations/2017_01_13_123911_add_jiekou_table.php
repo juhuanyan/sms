@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddAdminUsersTable extends Migration
+class AddJiekouTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,8 @@ class AddAdminUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('admin_users', function (Blueprint $table) {
-            $table->integer('status')->default(0);
-            $table->integer('jiekouid');
+        Schema::table('jiekou', function (Blueprint $table) {
             $table->string('jiangeshijian');
-            $table->string('fangwenip');
-            $table->string('dengluip');
-            $table->string('jiekouurl');
         });
     }
 
@@ -30,7 +25,7 @@ class AddAdminUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('admin_users', function (Blueprint $table) {
+        Schema::table('jiekous', function (Blueprint $table) {
             //
         });
     }

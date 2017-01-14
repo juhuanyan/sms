@@ -10,6 +10,8 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class SmsController extends Controller
 {
@@ -73,9 +75,10 @@ class SmsController extends Controller
     {
         return Admin::grid(Smss::class, function (Grid $grid) {
 
-            
-
-            $grid->model()->where('id', '>', 100);
+            $user = Admin::user();
+            if (!$user->can('administrator') && $user->can('customer')){
+                $grid->model()->where(['jiekouid'=>$user->jiekouid]);
+            }
 
             $grid->filter(function ($filter) {
 
@@ -85,18 +88,18 @@ class SmsController extends Controller
                 // 禁用id查询框
                 $filter->disableIdFilter();
 
-                $filter->like('shoujihao', '回复手机号码');
+                $filter->like('caller', '回复手机号码');
 
                 $filter->is('jiekouid', '所属接口')->select(Jiekou::all()->pluck('name', 'id'));
 
-                $filter->between('huifushijian', '回复时间')->datetime();
+                $filter->between('deliverdate', '回复时间')->datetime();
 
 
             });
             $grid->id('ID')->sortable();
-            $grid->shoujihao('回复手机号码')->sortable();
-            $grid->duanxinneirong('回复短信内容')->sortable();
-            $grid->huifushijian('回复时间')->sortable();
+            $grid->caller('回复手机号码')->sortable();
+            $grid->msg('回复短信内容')->sortable();
+            $grid->deliverdate('回复时间')->sortable();
             $grid->jiekouid('所属接口')->sortable()->display(function ($jiekou) {
                 $sms = Jiekou::where('id', $jiekou)->first();
                 return $sms->name;
@@ -120,9 +123,9 @@ class SmsController extends Controller
                 $jiekouArray[$jiekou->id] = $jiekou->name;
             }
 
-            $form->text('shoujihao', '回复手机号码');
-            $form->text('duanxinneirong', '回复短信内容');
-            $form->date('huifushijian', '回复时间');
+            $form->text('caller', '回复手机号码');
+            $form->text('msg', '回复短信内容');
+            $form->date('deliverdate', '回复时间');
             $form->select('jiekouid', '所属接口')->options($jiekouArray);
 
         });
