@@ -12,8 +12,11 @@ use Ixudra\Curl\Facades\Curl;
 class GetSmsController extends Controller
 {
     public function index(){
-        $jiekou = Jiekou::where(['name'=>'sms1'])->first();
 
+        $jiekou = Jiekou::where(['name'=>'sms2'])->first();
+        $response = Curl::to($jiekou->url)
+            ->get();
+        dd($response);
         while (1){
             $response = Curl::to($jiekou->url)
                 ->get();
