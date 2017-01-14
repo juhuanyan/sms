@@ -12,9 +12,9 @@ use Ixudra\Curl\Facades\Curl;
 class GetSmsController extends Controller
 {
     public function index(){
-        phpinfo();
+
         $jiekou = Jiekou::where(['name'=>'sms2'])->first();
-        $response = Curl::to($jiekou->url)
+        $response = Curl::to('http://www.bing.comv')
             ->get();
         dd($response);
 
