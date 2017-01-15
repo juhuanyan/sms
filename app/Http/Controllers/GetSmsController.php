@@ -16,8 +16,7 @@ class GetSmsController extends Controller
         $jiekou = Jiekou::where(['name'=>'sms1'])->first();
         $response = Curl::to($jiekou->url)
             ->get();
-        print_r($response);exit;
-
+        print_r($response);
         while (1){
             $response = Curl::to($jiekou->url)
                 ->get();
