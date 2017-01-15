@@ -41,6 +41,7 @@ class Jiekou1 extends Command
      */
     static public function quote()
     {
+        Log::info('顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶');
         $jiekou = Jiekou::where(['name'=>'sms1'])->first();
         while (1){
             $response = Curl::to($jiekou->url)
