@@ -40,25 +40,24 @@ class Jiekou1 extends Command
      */
     static public function quote()
     {
-        \Log::info('顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶');
-//        $jiekou = Jiekou::where(['name'=>'sms1'])->first();
-//        while (1){
-//            $response = Curl::to($jiekou->url)
-//                ->get();
-//            $obj_xml = simplexml_load_string($response);
-//            $items = $obj_xml->Body->Deliver;
-//            if (!$obj_xml->Body->Deliver){
-//                break;
-//            } else {
-//                foreach($items as $item) {
-//                    $sms = new Smss();
-//                    $sms->jiekouid = $jiekou->id;
-//                    $sms->caller = $item->Caller;
-//                    $sms->msg = urldecode($item->Msg);
-//                    $sms->deliverdate = $item->DeliverDate;
-//                    $sms->save();
-//                }
-//            }
-//        }
+        $jiekou = Jiekou::where(['name'=>'sms1'])->first();
+        while (1){
+            $response = Curl::to($jiekou->url)
+                ->get();
+            $obj_xml = simplexml_load_string($response);
+            $items = $obj_xml->Body->Deliver;
+            if (!$obj_xml->Body->Deliver){
+                break;
+            } else {
+                foreach($items as $item) {
+                    $sms = new Smss();
+                    $sms->jiekouid = $jiekou->id;
+                    $sms->caller = $item->Caller;
+                    $sms->msg = urldecode($item->Msg);
+                    $sms->deliverdate = $item->DeliverDate;
+                    $sms->save();
+                }
+            }
+        }
     }
 }
