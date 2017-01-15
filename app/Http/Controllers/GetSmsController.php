@@ -12,7 +12,6 @@ use Ixudra\Curl\Facades\Curl;
 class GetSmsController extends Controller
 {
     public function index(){
-        phpinfo();
         $jiekou = Jiekou::where(['name'=>'sms2'])->first();
         $response = Curl::to($jiekou->url)
             ->get();
