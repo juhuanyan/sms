@@ -18,6 +18,7 @@ use Encore\Admin\Widgets\Collapse;
 use Encore\Admin\Widgets\InfoBox;
 use Encore\Admin\Widgets\Tab;
 use Encore\Admin\Widgets\Table;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {

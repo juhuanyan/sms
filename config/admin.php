@@ -20,7 +20,7 @@ return [
     /*
      * Laravel-admin title.
      */
-    'title'  => 'Admin',
+    'title'  => '上行短信WEB平台',
 
     'auth' => [
         'driver'   => 'session',
