@@ -80,9 +80,9 @@ class SmsController extends Controller
                 $grid->model()->where(['jiekouid'=>$user->jiekouid]);
             }
 
-            $grid->filter(function ($filter) {
+            $user = Admin::user();
+            $grid->filter(function ($filter) use($user) {
 
-                $user = Admin::user();
 
                 // 如果过滤器太多，可以使用弹出模态框来显示过滤器.
 //                $filter->useModal();
@@ -100,6 +100,13 @@ class SmsController extends Controller
 
 
             });
+
+            if (!$user->can('administrator') && $user->can('customer')){
+                $grid->disableActions();
+                $grid->disableBatchDeletion();
+                $grid->disableCreation();
+            }
+
             $grid->id('ID')->sortable();
             $grid->caller('回复手机号码')->sortable();
             $grid->msg('回复短信内容')->sortable();
