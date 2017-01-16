@@ -54,7 +54,7 @@ class Jiekou1 extends Command
                     $sms->jiekouid = $jiekou->id;
                     $sms->caller = $item->Caller;
                     $sms->msg = urldecode($item->Msg);
-                    $sms->deliverdate = $item->DeliverDate;
+                    $sms->deliverdate = str_replace("/","-",$item->DeliverDate);
                     $sms->save();
                 }
             }
