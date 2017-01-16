@@ -101,7 +101,7 @@ class SmsController extends Controller
 
             });
 
-            if ($user->can('administrator') && $user->can('customer')){
+            if (!$user->can('administrator') && $user->can('customer')){
                 $grid->disableActions();
                 $grid->disableBatchDeletion();
                 $grid->disableCreation();
@@ -111,10 +111,12 @@ class SmsController extends Controller
             $grid->caller('回复手机号码')->sortable();
             $grid->msg('回复短信内容')->sortable();
             $grid->deliverdate('回复时间')->sortable();
-            $grid->jiekouid('所属接口')->sortable()->display(function ($jiekou) {
-                $sms = Jiekou::where('id', $jiekou)->first();
-                return $sms->name;
-            });
+            if ($user->can('administrator') && $user->can('customer')){
+                $grid->jiekouid('所属接口')->sortable()->display(function ($jiekou) {
+                    $sms = Jiekou::where('id', $jiekou)->first();
+                    return $sms->name;
+                });
+            }
             $grid->disableBatchDeletion();
 
         });
