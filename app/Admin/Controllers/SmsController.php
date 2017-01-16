@@ -101,7 +101,7 @@ class SmsController extends Controller
 
             });
 
-            if (!$user->can('administrator') && $user->can('customer')){
+            if ($user->can('administrator') && $user->can('customer')){
                 $grid->disableActions();
                 $grid->disableBatchDeletion();
                 $grid->disableCreation();
