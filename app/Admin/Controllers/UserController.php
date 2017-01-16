@@ -163,7 +163,7 @@ class UserController extends Controller
             $form->select('jiekouid', '接口名称')->options($jiekouArray);
             $form->text('fangwenip', '接口访问IP')->placeholder('*为空则不限制,建议填写。多IP ","分割');
             $form->text('dengluip', 'Web平台登录IP')->placeholder('*为空则不限制,多IP ","分割');
-            $form->text('jiekouurl', '查询接口URL')->rules('required');
+            $form->html(url('test/?sdt='.date('Y/m/d h:i:s').'&edt='.date('Y/m/d h:i:s')), $label = '查询接口URL');
 
             $form->saving(function (Form $form) {
                 if ($form->password && $form->model()->password != $form->password) {

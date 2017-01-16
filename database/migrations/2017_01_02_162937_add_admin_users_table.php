@@ -16,7 +16,7 @@ class AddAdminUsersTable extends Migration
         Schema::table('admin_users', function (Blueprint $table) {
             $table->integer('status')->default(0);
             $table->integer('jiekouid');
-            $table->string('jiangeshijian');
+//            $table->string('jiangeshijian');
             $table->string('fangwenip');
             $table->string('dengluip');
             $table->string('jiekouurl');

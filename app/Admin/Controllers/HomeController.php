@@ -24,7 +24,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return redirect('admin/jiekou');
+        return redirect('admin/sms');
 
         return Admin::content(function (Content $content) {
 
