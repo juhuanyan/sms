@@ -163,7 +163,7 @@ class UserController extends Controller
             $form->select('jiekouid', '接口名称')->options($jiekouArray);
             $form->text('fangwenip', '接口访问IP')->placeholder('*为空则不限制,建议填写。多IP ","分割');
             $form->text('dengluip', 'Web平台登录IP')->placeholder('*为空则不限制,多IP ","分割');
-            $form->display('查询接口URL')->default(url('test/?sdt='.time().'&edt='.time()))->help('test需要用用户名替换,开始时间、结束时间为时间戳可以为空');
+            $form->display('查询接口URL')->default(url('test/?sdt='.time().'&edt='.time()))->help('test需要用用户名替换,sdt为开始时间、edt为结束时间为时间戳可以为空');
 
             $form->saving(function (Form $form) {
                 if ($form->password && $form->model()->password != $form->password) {
