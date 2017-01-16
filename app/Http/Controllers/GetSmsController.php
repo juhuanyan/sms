@@ -41,17 +41,17 @@ class GetSmsController extends Controller
             $edt = $request->edt;
             if ($sdt && !$edt){
                 $smss = Smss::where(['jiekouid'=>$user->jiekouid])
-                    ->where('deliverdate', '>=', $sdt)
+                    ->where('deliverdate', '>=', date('Y/m/d h:i:s', $sdt))
                     ->select('caller','msg','deliverdate')
                     ->get();
             } elseif(!$sdt && $edt){
                 $smss = Smss::where(['jiekouid'=>$user->jiekouid])
-                    ->where('deliverdate', '<=', $edt)
+                    ->where('deliverdate', '<=', date('Y/m/d h:i:s', $edt))
                     ->select('caller','msg','deliverdate')
                     ->get();
             } elseif($sdt && $edt) {
                 $smss = Smss::where(['jiekouid'=>$user->jiekouid])
-                    ->whereBetween('deliverdate', [$sdt, $edt])
+                    ->whereBetween('deliverdate', [date('Y/m/d h:i:s', $sdt), date('Y/m/d h:i:s', $edt)])
                     ->select('caller','msg','deliverdate')
                     ->get();
             } else {
