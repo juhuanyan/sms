@@ -82,6 +82,8 @@ class SmsController extends Controller
 
             $grid->filter(function ($filter) {
 
+                $user = Admin::user();
+
                 // 如果过滤器太多，可以使用弹出模态框来显示过滤器.
 //                $filter->useModal();
 
@@ -90,7 +92,9 @@ class SmsController extends Controller
 
                 $filter->like('caller', '回复手机号码');
 
-                $filter->is('jiekouid', '所属接口')->select(Jiekou::all()->pluck('name', 'id'));
+                if ($user->can('administrator') && $user->can('customer')){
+                    $filter->is('jiekouid', '所属接口')->select(Jiekou::all()->pluck('name', 'id'));
+                }
 
                 $filter->between('deliverdate', '回复时间')->datetime();
 
