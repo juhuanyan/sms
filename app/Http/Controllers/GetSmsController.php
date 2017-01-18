@@ -17,7 +17,7 @@ class GetSmsController extends Controller
             $response = Curl::to($jiekou->url)
                 ->get();
             $datas = json_decode($response);
-
+            dd($datas);
             if (!$datas){
                 break;
             } else {
