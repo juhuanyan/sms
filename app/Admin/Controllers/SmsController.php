@@ -79,6 +79,7 @@ class SmsController extends Controller
             if (!$user->can('administrator') && $user->can('customer')){
                 $grid->model()->where(['jiekouid'=>$user->jiekouid]);
             }
+            $grid->model()->orderby('deliverdate', 'DESC');
 
             $user = Admin::user();
             $grid->filter(function ($filter) use($user) {
