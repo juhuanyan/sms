@@ -73,14 +73,13 @@ class SmsController extends Controller
      */
     protected function grid()
     {
+//        dd(urldecode('http://sms.dev/admin/sms?_sort%5Bcolumn%5D=id&_sort%5Btype%5D=desc'));
         return Admin::grid(Smss::class, function (Grid $grid) {
 
             $user = Admin::user();
             if (!$user->can('administrator') && $user->can('customer')){
                 $grid->model()->where(['jiekouid'=>$user->jiekouid]);
             }
-            $grid->model()->orderby('deliverdate', 'DESC');
-
             $user = Admin::user();
             $grid->filter(function ($filter) use($user) {
 
