@@ -50,11 +50,20 @@ class Jiekou2 extends Command
                 break;
             } else {
                 foreach($datas as $item) {
+                    $y = substr($item->MoTime, 0, 4);
+                    $m = substr($item->MoTime, 4, 2);
+                    $d = substr($item->MoTime, 6, 2);
+                    $h = substr($item->MoTime, 8, 2);
+                    $i = substr($item->MoTime, 10, 2);
+                    $s = substr($item->MoTime, 12, 2);
+
+                    $deliverdate = $y.'-'.$m.'-'.$d.' '.$h.':'.$i.':'.$s;
+
                     $sms = new Smss();
                     $sms->jiekouid = $jiekou->id;
                     $sms->caller = $item->Phone;
                     $sms->msg = urldecode($item->Msg);
-                    $sms->deliverdate = $item->MoTime;
+                    $sms->deliverdate = $deliverdate;
                     $sms->save();
                 }
             }
