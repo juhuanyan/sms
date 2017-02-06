@@ -11,22 +11,73 @@ use Ixudra\Curl\Facades\Curl;
 
 class GetSmsController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
+
+        $jiekou = $request->jiekou;
+        switch ($jiekou) {
+            case 'sms2':
+                $this->sms2();
+                break;
+
+            default :
+                $this->sms1();
+                break;
+        }
+        $jiekou = Jiekou::find($request->id);
+        $jiekou->updated_at = \Carbon\Carbon::createFromTimeStamp(time())->toDateTimeString();;
+        $jiekou->save();
+        return redirect('admin/jiekou');
+
+
+    }
+    public function sms1()
+    {
+        $jiekou = Jiekou::where(['name'=>'sms1'])->first();
+        while (1){
+            $response = Curl::to($jiekou->url)
+                ->get();
+            $obj_xml = simplexml_load_string($response);
+            $items = $obj_xml->Body->Deliver;
+            if (!$obj_xml->Body->Deliver){
+                return true;
+            } else {
+                foreach($items as $item) {
+                    $sms = new Smss();
+                    $sms->jiekouid = $jiekou->id;
+                    $sms->caller = $item->Caller;
+                    $sms->msg = urldecode($item->Msg);
+                    $sms->deliverdate = str_replace("/","-",$item->DeliverDate);
+                    $sms->save();
+                }
+            }
+        }
+    }
+    public function sms2()
+    {
         $jiekou = Jiekou::where(['name'=>'sms2'])->first();
         while (1){
             $response = Curl::to($jiekou->url)
                 ->get();
             $datas = json_decode($response);
-            dd($datas);
+
             if (!$datas){
-                break;
+                return true;
             } else {
                 foreach($datas as $item) {
+                    $y = substr($item->MoTime, 0, 4);
+                    $m = substr($item->MoTime, 4, 2);
+                    $d = substr($item->MoTime, 6, 2);
+                    $h = substr($item->MoTime, 8, 2);
+                    $i = substr($item->MoTime, 10, 2);
+                    $s = substr($item->MoTime, 12, 2);
+
+                    $deliverdate = $y.'-'.$m.'-'.$d.' '.$h.':'.$i.':'.$s;
+
                     $sms = new Smss();
                     $sms->jiekouid = $jiekou->id;
                     $sms->caller = $item->Phone;
                     $sms->msg = urldecode($item->Msg);
-                    $sms->deliverdate = $item->MoTime;
+                    $sms->deliverdate = $deliverdate;
                     $sms->save();
                 }
             }
