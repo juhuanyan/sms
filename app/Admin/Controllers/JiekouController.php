@@ -88,7 +88,7 @@ class JiekouController extends Controller
             $grid->name('接口名称')->sortable();
             $grid->url('接口URL')->sortable();
             $grid->updated_at('最后更新时间')->sortable();
-            $grid->column('最后更新时间')->display(function () {
+            $grid->column('手动更新')->display(function () {
                 $xingji = '<a href="'.url('getSms/'.$this->name.'/'.$this->id).'"><i class="fa fa-refresh"></i></a>';
                 return $xingji;
             });
