@@ -24,7 +24,7 @@ class GetSmsController extends Controller
                 break;
         }
         $jiekou = Jiekou::find($request->id);
-        $jiekou->updated_at = \Carbon\Carbon::createFromTimeStamp(time())->toDateTimeString();;
+        $jiekou->updated_at = \Carbon\Carbon::createFromTimeStamp(time(), 'Asia/Shanghai')->toDateTimeString();;
         $jiekou->save();
         return redirect('admin/jiekou');
 
