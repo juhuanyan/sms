@@ -77,11 +77,12 @@ class SmsController extends Controller
         return Admin::grid(Smss::class, function (Grid $grid) {
 
             $user = Admin::user();
+            $jiekouid = explode(',', $user->jiekouid);
             if (!$user->can('administrator') && $user->can('customer')){
-                $grid->model()->where(['jiekouid'=>$user->jiekouid]);
+                $grid->model()->whereIn('jiekouid', $jiekouid);
             }
             $user = Admin::user();
-            $grid->filter(function ($filter) use($user) {
+            $grid->filter(function ($filter) use($user, $jiekouid) {
 
 
                 // 如果过滤器太多，可以使用弹出模态框来显示过滤器.
@@ -94,6 +95,8 @@ class SmsController extends Controller
 
                 if ($user->can('administrator') && $user->can('customer')){
                     $filter->is('jiekouid', '所属接口')->select(Jiekou::all()->pluck('name', 'id'));
+                } else {
+                    $filter->is('jiekouid', '所属接口')->select(Jiekou::whereIn('id', $jiekouid)->pluck('name', 'id'));
                 }
 
                 $filter->between('deliverdate', '回复时间')->datetime();

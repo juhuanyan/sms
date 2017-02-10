@@ -2,8 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\AdminUser;
 use Closure;
 use Auth;
+use Encore\Admin\Auth\Database\Administrator;
 use Encore\Admin\Facades\Admin;
 use Symfony\Component\VarDumper\Dumper\DataDumperInterface;
 use Illuminate\Support\Facades\Redirect;
@@ -23,14 +25,15 @@ class CheckIp
     public function handle($request, Closure $next)
     {
 
-        $user = Admin::user();
+        $user = AdminUser::where(['username'=>$request->username])->first();
+        if ($user){
+            $realip = $this->get_real_ip();
+            $dengluip = explode(',', $user->dengluip);
+            if ($user->dengluip && !in_array($realip, $dengluip)){
 
-        $realip = $this->get_real_ip();
-        $dengluip = explode(',', $user->dengluip);
-        if ($user->dengluip && !in_array($realip, $dengluip)){
+                return Redirect::back()->withErrors(['username' => $this->getFailedLoginMessage()]);
 
-            return Redirect::to('admin/auth/logout')->withInput()->withErrors(array('msg' => 'IP禁止访问'));
-
+            }
         }
         return $next($request);
     }
@@ -58,6 +61,6 @@ class CheckIp
     }
     protected function getFailedLoginMessage()
     {
-        return Lang::has('auth.failed') ? trans('auth.failed') : 'These credentials do not match our records.';
+        return '限制访问IP！';
     }
 }

@@ -160,7 +160,8 @@ class UserController extends Controller
             }
             $form->divide();
             $form->html('<b>用户为管理员时,以下信息不需要填写!!</b>');
-            $form->select('jiekouid', '接口名称')->options($jiekouArray);
+//            $form->select('jiekouid', '接口名称')->options($jiekouArray);
+            $form->multipleSelect('jiekouid', '接口名称')->options($jiekouArray);
             $form->text('fangwenip', '接口访问IP')->placeholder('*为空则不限制,建议填写。多IP ","分割');
             $form->text('dengluip', 'Web平台登录IP')->placeholder('*为空则不限制,多IP ","分割');
             $form->text('jiekouurl', '查询接口URL')->default(url('test/?sdt='.date('Y-m-d', time()).'&edt='.date('Y-m-d', time())))->help('test需要用用户名替换,sdt为开始时间、edt为结束时间值为时间戳可以为空');
