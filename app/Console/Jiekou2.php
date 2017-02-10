@@ -49,6 +49,8 @@ class Jiekou2 extends Command
             if (!$datas){
                 break;
             } else {
+                $jiekou->updated_at = \Carbon\Carbon::createFromTimeStamp(time(), 'Asia/Shanghai')->toDateTimeString();
+                $jiekou->save();
                 foreach($datas as $item) {
                     $y = substr($item->MoTime, 0, 4);
                     $m = substr($item->MoTime, 4, 2);

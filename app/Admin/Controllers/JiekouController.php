@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Models\Jiekou;
+use App\Models\Smss;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Facades\Admin;
@@ -88,6 +89,14 @@ class JiekouController extends Controller
             $grid->name('接口名称')->sortable();
             $grid->url('接口URL')->sortable();
             $grid->updated_at('最后更新时间')->sortable();
+//            $grid->column('最后更新时间')->display(function () {
+//                $sms = Smss::where(['jiekouid'=>$this->id])->orderBy('updated_at', 'desc')->first();
+//                if ($sms->updated_at > $this->updated_at) {
+//                    return $sms->updated_at;
+//                } else {
+//                    return $this->updated_at;
+//                }
+//            });
             $grid->column('手动更新')->display(function () {
                 $xingji = '<a href="'.url('getSms/'.$this->name.'/'.$this->id).'"><i class="fa fa-refresh"></i></a>';
                 return $xingji;

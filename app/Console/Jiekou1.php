@@ -49,6 +49,8 @@ class Jiekou1 extends Command
             if (!$obj_xml->Body->Deliver){
                 break;
             } else {
+                $jiekou->updated_at = \Carbon\Carbon::createFromTimeStamp(time(), 'Asia/Shanghai')->toDateTimeString();
+                $jiekou->save();
                 foreach($items as $item) {
                     $sms = new Smss();
                     $sms->jiekouid = $jiekou->id;
