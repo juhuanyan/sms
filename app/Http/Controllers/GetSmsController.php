@@ -14,13 +14,17 @@ class GetSmsController extends Controller
     public function index(Request $request){
 
         $jiekou = $request->jiekou;
-        switch ($jiekou) {
-            case 'sms2':
-                $this->sms2();
+        $id = $request->id;
+        switch ($id) {
+            case 3:
+                $this->sms3($jiekou);
+                break;
+            case 4:
+                $this->sms4($jiekou);
                 break;
 
             default :
-                $this->sms1();
+                $this->sms2($jiekou);
                 break;
         }
         $jiekou = Jiekou::find($request->id);
@@ -30,9 +34,9 @@ class GetSmsController extends Controller
 
 
     }
-    public function sms1()
+    public function sms2($name)
     {
-        $jiekou = Jiekou::where(['name'=>'sms1'])->first();
+        $jiekou = Jiekou::where(['name'=>$name])->first();
         while (1){
             $response = Curl::to($jiekou->url)
                 ->get();
@@ -52,9 +56,9 @@ class GetSmsController extends Controller
             }
         }
     }
-    public function sms2()
+    public function sms3($name)
     {
-        $jiekou = Jiekou::where(['name'=>'sms2'])->first();
+        $jiekou = Jiekou::where(['name'=>$name])->first();
         while (1){
             $response = Curl::to($jiekou->url)
                 ->get();
