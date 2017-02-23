@@ -40,7 +40,7 @@ class Jiekou1 extends Command
      */
     static public function quote()
     {
-        $jiekou = Jiekou::where(['name'=>'sms1'])->first();
+        $jiekou = Jiekou::where(['id'=>2])->first();
         while (1){
             $response = Curl::to($jiekou->url)
                 ->get();
