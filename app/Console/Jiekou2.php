@@ -45,7 +45,6 @@ class Jiekou2 extends Command
             $response = Curl::to($jiekou->url)
                 ->get();
             $datas = json_decode($response);
-
             if (!$datas){
                 break;
             } else {
